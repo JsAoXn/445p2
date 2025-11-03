@@ -166,11 +166,11 @@ def early_stopping(stats: list, curr_count_to_patience: int, prev_val_loss: floa
     Returns: new values of curr_count_to_patience and prev_val_loss
     """
     # TODO: 2(e) - implement early stopping
-    if (prev_val_loss <= stats[-1][7]):
+    if (prev_val_loss <= stats[-1][1]):
         curr_count_to_patience = curr_count_to_patience + 1
     else:
         curr_count_to_patience = 0
-        prev_val_loss = stats[-1][7]
+        prev_val_loss = stats[-1][1]
 
 
     return curr_count_to_patience, prev_val_loss

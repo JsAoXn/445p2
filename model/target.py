@@ -23,8 +23,8 @@ class Target(nn.Module):
         super().__init__()
 
         # TODO: 2(b) - define each layer
-        stride = (2,2)
-        padding = "SAME"
+        stride = 2
+        padding = 2
         filter = 5
         pooler = 2
         self.conv1 = nn.Conv2d(3, 16, filter, stride, padding)
