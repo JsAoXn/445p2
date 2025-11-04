@@ -72,14 +72,14 @@ def main():
             X_pos.append(training_set.X[idx])
 
         for i, xi in enumerate(X_pos):
-            axes[0, i].imshow(xi)
+            axes[0, i].imshow(xi / 255.0)
 
         X_neg = []
         for idx in rand_neg_idx:
             X_neg.append(training_set.X[idx])
 
         for i, xi in enumerate(X_neg):
-            axes[1, i].imshow(xi)
+            axes[1, i].imshow(xi / 255.0)
 
         plt.draw()
         fig = plt.gcf()
