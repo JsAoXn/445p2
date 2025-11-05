@@ -28,21 +28,26 @@ def main():
     )
 
     # TODO: 4(g) - Define the ViT Model according to the appendix D
-
+    model = ViT(16, 2, 16, 2)
     # TODO: 4(g) - define loss function, and optimizer
-    
+    criterion = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=10e-3)
+
     print(f"Number of float-valued parameters: {count_parameters(model)}")
 
     # Attempts to restore the latest checkpoint if exists
     print("Loading ViT...")
     model, start_epoch, stats = restore_checkpoint(model, config("vit.checkpoint"))
-    
+    print(f"restore_checkpoint returned: start_epoch={start_epoch}, stats_len={len(stats)}")
+
+    # Force start from scratch for now (existing code behavior)
     start_epoch = 0
-    stats = []    
+    stats = []
 
     axes = make_training_plot(name="ViT Training")
 
     # Evaluate the randomly initialized model
+    print("Calling evaluate_epoch for initial evaluation...")
     evaluate_epoch(
         axes,
         tr_loader,
@@ -53,13 +58,14 @@ def main():
         start_epoch,
         stats,
     )
+    print("Returned from initial evaluate_epoch")
 
     # initial val loss for early stopping
     prev_val_loss = stats[0][1]
 
     # TODO: 4(h) - define patience for early stopping
-    patience = None
-    curr_patience = None
+    patience = 5
+    curr_patience = 0
 
     # Loop over the entire dataset multiple times
     epoch = start_epoch
@@ -91,7 +97,6 @@ def main():
     plt.savefig(f"vit_training_plot_patience={patience}.png", dpi=200)
     plt.ioff()
     plt.show()
-    raise NotImplementedError()
 
 
 if __name__ == "__main__":
