@@ -287,12 +287,5 @@ def predictions(logits: torch.Tensor) -> torch.Tensor:
         the predicted class output that has the highest probability. This should be of size (batch_size,).
     """
     # TODO 2(c) - implement predictions
-    pred = torch.zeros(logits.shape[0], dtype=torch.long)
 
-    for i in range(pred.shape[0]):
-        if logits[i][0] > logits[i][1]:
-            pred[i] = 0
-        else:
-            pred[i] = 1
-
-    return pred
+    return torch.argmax(logits, dim=1)

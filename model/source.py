@@ -25,14 +25,17 @@ class Source(nn.Module):
         super().__init__()
 
         # TODO: 3(a) - define each layer
-        self.conv1 = None
-        self.pool = None
-        self.conv2 = None
-        self.conv3 = None
-        self.fc1 = None
+        stride = 2
+        padding = 2
+        filter = 5
+        pooler = 2
+        self.conv1 = nn.Conv2d(3, 16, filter, stride, padding)
+        self.pool = nn.MaxPool2d(pooler, stride, padding=0)
+        self.conv2 = nn.Conv2d(16, 64, filter, stride, padding)
+        self.conv3 = nn.Conv2d(64, 8, filter, stride, padding)
+        self.fc1 = nn.Linear(32, 8)
 
         self.init_weights()
-        raise NotImplementedError()
 
     def init_weights(self) -> None:
         """Initialize model weights."""
@@ -40,10 +43,10 @@ class Source(nn.Module):
 
         for conv in [self.conv1, self.conv2, self.conv3]:
             # TODO: 3(a) - initialize the parameters for the convolutional layers
-            pass
+            nn.init.normal_(conv.weight, mean=0.0, std=sqrt(1.0/(5*5*conv.in_channels)))
         
         # TODO: 3(a) - initialize the parameters for [self.fc1]
-        raise NotImplementedError() 
+        nn.init.normal_(conv.weight, mean=0.0, std=sqrt(1.0/(self.fc1.in_features)))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -63,4 +66,12 @@ class Source(nn.Module):
         N, C, H, W = x.shape
 
         # TODO: 3(a) - forward pass
-        raise NotImplementedError()
+        activate = nn.ReLU(inplace=False)
+        x = activate(self.conv1(x))
+        x = self.pool(x)
+        x = activate(self.conv2(x))
+        x = self.pool(x)
+        x = activate(self.conv3(x))
+        x = torch.flatten(x, 1)
+        x = self.fc1(x)
+        return x

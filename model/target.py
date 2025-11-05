@@ -41,7 +41,7 @@ class Target(nn.Module):
         for conv in [self.conv1, self.conv2, self.conv3]:
             # TODO: 2(b) - initialize the parameters for the convolutional layers
             nn.init.normal_(conv.weight, mean=0.0, std=sqrt(1.0/(5*5*conv.in_channels)))
-            pass
+            
 
         # TODO: 2(b) - initialize the parameters for [self.fc_1]
         nn.init.normal_(conv.weight, mean=0.0, std=sqrt(1.0/(self.fc_1.in_features)))
