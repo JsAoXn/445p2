@@ -1,29 +1,15 @@
-"""
-EECS 445 - Introduction to Machine Learning
-Winter 2025 - Project 2
-
-Target CNN
-    Constructs a pytorch model for a convolutional neural network
-    Usage: from model.target import Target
-"""
-
-from math import sqrt
-
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+from math import sqrt
 from utils import set_random_seed
 
+__all__ = ["Source"]
 
-__all__ = ["Target"]
-
-
-class Challenge(nn.Module):
-    def __init__(self, num_classes=2) -> None: # Pass in num_classes
+class Source_Challenge(nn.Module):
+    def __init__(self, num_classes=8) -> None: # Pass in num_classes
         """Define improved model architecture."""
         super().__init__()
 
-   
         self.conv1 = nn.Conv2d(3, 16, kernel_size=5, stride=1, padding=2)
         self.bn1 = nn.BatchNorm2d(16)
         
@@ -43,9 +29,32 @@ class Challenge(nn.Module):
         self.dropout = nn.Dropout(p=0.5) 
         
        
-        self.fc2 = nn.Linear(128, num_classes) 
+        self.fc1 = nn.Linear(128, num_classes) 
      
     
+        
+   
+  
+
+    
+
+      
+        
+
+        
+       
+       
+
+
+
+ 
+
+
+    
+        
+       
+        
+       
 
         self.init_weights()
 
@@ -58,8 +67,8 @@ class Challenge(nn.Module):
             if layer.bias is not None:
                 nn.init.constant_(layer.bias, 0)
  
-        nn.init.normal_(self.fc2.weight, mean=0.0, std=sqrt(1.0/self.fc2.in_features))
-        nn.init.constant_(self.fc2.bias, 0)
+        nn.init.normal_(self.fc1.weight, mean=0.0, std=sqrt(1.0/self.fc1.in_features))
+        nn.init.constant_(self.fc1.bias, 0)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -79,5 +88,5 @@ class Challenge(nn.Module):
         x = self.avgpool(x)     
         x = torch.flatten(x, 1) 
         x = self.dropout(x)     
-        x = self.fc2(x)         
+        x = self.fc1(x)         
         return x

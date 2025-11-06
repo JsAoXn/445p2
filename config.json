@@ -21,8 +21,15 @@
         "batch_size": 64,
         "num_classes": 8
     },
+    "source_challenge": {
+        "checkpoint": "./checkpoints/source_challenge/",
+        "learning_rate": 1e-3,
+        "batch_size": 64,
+        "num_classes": 8
+    },
     "challenge": {
         "checkpoint": "./checkpoints/challenge/",
+        "frozen_checkpoint": "./checkpoints/frozen_challenge_{layer}/",
         "learning_rate": 1e-3,
         "batch_size": 32,
         "num_classes": 2
